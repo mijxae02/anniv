@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For my Girlfriend Only</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      background: linear-gradient(135deg, #f1c6ea, #f78fb3); /* Vibrant soft pink to lavender gradient */
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 60px 40px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    h1 {
+      font-size: 50px;
+      color: #8e44ad;
+      text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+      margin-bottom: 30px;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 3px;
+      animation: bounce 1s ease infinite;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    .message {
+      font-size: 24px;
+      color: #555;
+      margin-bottom: 40px;
+      font-style: italic;
+      max-width: 850px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .images {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
+
+    .image-container {
+      width: 280px;
+      height: 280px;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      opacity: 0.85;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      position: relative;
+    }
+
+    .image-container:hover {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-message {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      width: 90%;
+      text-align: center;
+      display: none;
+    }
+    
+    .duration {
+      font-weight: bold;
+      font-size: 28px;
+      color: #8e44ad;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .image-container:hover .image-message {
+      display: block;
+    }
+
+    .cta {
+      background-color: #ff69b4;
+      color: white;
+      padding: 18px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 22px;
+      margin-top: 40px;
+      display: inline-block;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      letter-spacing: 2px;
+    }
+
+    .cta:hover {
+      background-color: #ff3385;
+      transform: translateY(-5px);
+    }
+
+    .cta:active {
+      transform: translateY(3px);
+    }
+
+    .heart-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 90px;
+      height: 90px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .heart-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .heart-btn:hover img {
+      transform: scale(1.1);
+    }
+
+    .heart-btn:active img {
+      transform: scale(0.9);
+    }
+
+    /* Confetti Animation */
+    .confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .confetti div {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ff69b4;
+      opacity: 0.9;
+      animation: fall 3s infinite ease-in-out;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(720deg); }
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Confetti Animation -->
+  <div class="confetti">
+    <div style="animation-delay: 0s; left: 10%;"></div>
+    <div style="animation-delay: 1s; left: 20%;"></div>
+    <div style="animation-delay: 2s; left: 30%;"></div>
+    <div style="animation-delay: 3s; left: 40%;"></div>
+    <div style="animation-delay: 4s; left: 50%;"></div>
+    <div style="animation-delay: 5s; left: 60%;"></div>
+    <div style="animation-delay: 6s; left: 70%;"></div>
+    <div style="animation-delay: 7s; left: 80%;"></div>
+    <div style="animation-delay: 8s; left: 90%;"></div>
+  </div>
+
+  <div class="container">
+    <h1>Happy Anniversary, Babycakes!</h1>
+    <p class="message">This is a special surprise for you. Here are some of our most cherished moments together. I love you endlessly!</p>
+    <p class="message">
+      Our relationship has lasted for <span id="duration" class="duration"></span>. I love you endlessly!
+    </p>
+    
+    <!-- Image Gallery with Messages -->
+    <div class="images">
+      <div class="image-container">
+        <img src="./1.jfif" alt="Special Moment 1">
+        <p class="image-message">The first day we met, unforgettable!</p>
+      </div>
+      <div class="image-container">
+        <img src="2.jpg" alt="Special Moment 2">
+        <p class="image-message">Our first vacation together, pure bliss!</p>
+      </div>
+      <div class="image-container">
+        <img src="3.jfif" alt="Special Moment 3">
+        <p class="image-message">That night under the stars, so magical.</p>
+      </div>
+      <div class="image-container">
+        <img src="./1.jfif" alt="Special Moment 1">
+        <p class="image-message">The first day we met, unforgettable!</p>
+      </div>
+      <div class="image-container">
+        <img src="2.jpg" alt="Special Moment 2">
+        <p class="image-message">Our first vacation together, pure bliss!</p>
+      </div>
+      <div class="image-container">
+        <img src="3.jfif" alt="Special Moment 3">
+        <p class="image-message">That night under the stars, so magical.</p>
+      </div>
+      <div class="image-container">
+        <img src="./1.jfif" alt="Special Moment 1">
+        <p class="image-message">The first day we met, unforgettable!</p>
+      </div>
+      <div class="image-container">
+        <img src="2.jpg" alt="Special Moment 2">
+        <p class="image-message">Our first vacation together, pure bliss!</p>
+      </div>
+      <div class="image-container">
+        <img src="3.jfif" alt="Special Moment 3">
+        <p class="image-message">That night under the stars, so magical.</p>
+      </div>
+    </div>
+    
+    <!-- Personalized Message -->
+    <p class="message">You make my life complete, and I'm so thankful for you every day. Here's to many more beautiful memories together!</p>
+    
+    <!-- Call to Action -->
+    <a href="counting.html" class="cta">Anniversary Countdown</a>
+    <br><br>
+    <!-- Surprise Me Button -->
+    <button onclick="triggerConfetti()" class="cta">Surprise Me!</button>
+  </div>
+
+
+
+  <script>
+    // Function to calculate the duration of the relationship
+    function calculateDuration(startDate) {
+      const today = new Date();
+      const start = new Date(startDate);
+      const diffTime = today - start;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      const years = Math.floor(diffDays / 365);
+      const months = Math.floor((diffDays % 365) / 30);
+      const days = diffDays % 30;
+      return { years, months, days, totalDays: diffDays };
+    }
+
+    // Set the start date of your relationship
+    const startDate = '2023-02-26';
+  
+    // Calculate the duration
+    const { years, months, days, totalDays } = calculateDuration(startDate);
+  
+    // Display the duration in the placeholder
+    const durationElement = document.getElementById('duration');
+    durationElement.textContent = `${years} years, ${months} months, and ${days} days (${totalDays} days total)`;
+
+    // Trigger confetti on "Surprise Me" click
+    function triggerConfetti() {
+      const confettiElement = document.querySelector('.confetti');
+      confettiElement.classList.add('active');
+      setTimeout(() => {
+        confettiElement.classList.remove('active');
+      }, 5000);
+    }
+  </script>
+
+</body>
+</html>
