@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anniv Passcode</title>
   <style>
-    /* General body styles */
     body {
       font-family: 'Arial', sans-serif;
       background: linear-gradient(45deg, #8e44ad, #9b59b6); /* Purple gradient */
@@ -18,89 +17,68 @@
       align-items: center;
       margin: 0;
       position: relative;
-      overflow: hidden;
     }
 
-    /* Background heart image */
-    .heart-background {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 400px;
-      height: 400px;
-      background-image: url('./red-heart.png'); /* Replace with your image URL */
-      background-size: cover;
-      background-position: center;
-      transform: translate(-50%, -50%);
-      animation: pulseHeart 2s infinite;
-      z-index: -1;
-    }
-
-    /* Passcode form container */
-    .passcode-form {
-      background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
-      padding: 40px;
-      border-radius: 15px;
+    .piggy-bank-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 20px;
       text-align: center;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      max-width: 400px;
+      max-width: 350px;
       width: 100%;
       animation: slideIn 1s ease-out;
     }
 
-    /* Form input field */
-    .passcode-form input {
-      width: 80%; /* Set width to 80% */
+    .piggy-bank-icon {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .screen {
+      background-color: #333;
+      color: #9b59b6;
+      padding: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      letter-spacing: 5px;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .key {
+      background-color: #8e44ad;
+      color: white;
       padding: 15px;
       font-size: 18px;
       border-radius: 10px;
-      border: 1px solid #ddd;
-      margin-bottom: 20px;
-      text-align: center;
-      background-color: #f9f9f9;
-      transition: border-color 0.3s;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .passcode-form input:focus {
-      border-color: #8e44ad; /* Purple border when focused */
-      outline: none;
-    }
-
-    /* Submit button */
-    .passcode-form button {
-      background-color: #8e44ad;
-      color: white;
-      padding: 15px 25px;
-      font-size: 18px;
-      border-radius: 10px;
       border: none;
-      width: 80%; /* Set width to 80% */
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      margin-left: auto;
-      margin-right: auto;
+      transition: transform 0.2s ease, background-color 0.2s ease;
     }
 
-    .passcode-form button:hover {
-      background-color: #9b59b6; /* Lighter purple on hover */
-      transform: translateY(-3px);
+    .key:hover {
+      background-color: #9b59b6;
+      transform: scale(1.1);
     }
 
-    .passcode-form button:active {
-      transform: translateY(2px);
+    .key:active {
+      transform: scale(0.95);
     }
 
-    /* Text styles for heading */
-    h2 {
-      font-size: 30px;
-      color: #8e44ad; /* Purple color */
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
     }
 
-    /* Fade-in animation */
     @keyframes slideIn {
       from {
         opacity: 0;
@@ -111,52 +89,56 @@
         transform: translateY(0);
       }
     }
-
-    /* Heart pulse animation */
-    @keyframes pulseHeart {
-      0% {
-        transform: translate(-50%, -50%) scale(1);
-      }
-      50% {
-        transform: translate(-50%, -50%) scale(1.1);
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(1);
-      }
-    }
-
-    /* Add a footer note */
-    .footer {
-      position: absolute;
-      bottom: 20px;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 14px;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Heart Shape Background -->
-  <div class="heart-background"></div>
-
-  <!-- Passcode Form -->
-  <div class="passcode-form">
-    <h2>Anniv Passcode</h2>
-    <input type="password" id="passcodeInput" placeholder="Enter passcode">
-    <button onclick="checkPasscode()">Submit</button>
+  <div class="piggy-bank-container">
+    <img class="piggy-bank-icon" src="./2.jpg" alt="Piggy Bank"> <!-- Replace with a piggy bank icon -->
+    <div class="screen" id="screen">____</div>
+    <div class="keypad">
+      <button class="key" onclick="pressKey(1)">1</button>
+      <button class="key" onclick="pressKey(2)">2</button>
+      <button class="key" onclick="pressKey(3)">3</button>
+      <button class="key" onclick="pressKey(4)">4</button>
+      <button class="key" onclick="pressKey(5)">5</button>
+      <button class="key" onclick="pressKey(6)">6</button>
+      <button class="key" onclick="pressKey(7)">7</button>
+      <button class="key" onclick="pressKey(8)">8</button>
+      <button class="key" onclick="pressKey(9)">9</button>
+      <button class="key" onclick="clearScreen()">C</button>
+      <button class="key" onclick="pressKey(0)">0</button>
+      <button class="key" onclick="submitPasscode()">✔</button>
+    </div>
   </div>
 
   <script>
-    // Function to check passcode
-    function checkPasscode() {
-      const passcodeInput = document.getElementById("passcodeInput").value;
-      const correctPasscode = "0226"; // Correct passcode
+    let enteredPasscode = "";
+    const correctPasscode = "0226";
 
-      if (passcodeInput === correctPasscode) {
-        // Redirect to the main content page if passcode is correct
+    function pressKey(num) {
+      if (enteredPasscode.length < 4) {
+        enteredPasscode += num;
+        updateScreen();
+      }
+    }
+
+    function clearScreen() {
+      enteredPasscode = "";
+      updateScreen();
+    }
+
+    function updateScreen() {
+      const screen = document.getElementById("screen");
+      screen.textContent = enteredPasscode.padEnd(4, "_");
+    }
+
+    function submitPasscode() {
+      if (enteredPasscode === correctPasscode) {
         window.location.href = "anniv.html"; // Replace with the correct page
       } else {
         alert("Incorrect passcode. Please try again.");
+        clearScreen();
       }
     }
   </script>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Girlfriend</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      background: radial-gradient(circle at top, #a29bfe, #6c5ce7, #b2bec3);
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 60px 40px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 2s ease;
+    }
+
+    h1 {
+      font-size: 50px;
+      color: #6c5ce7;
+      text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+      margin-bottom: 30px;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 3px;
+      animation: textGlow 2s infinite alternate;
+    }
+
+    @keyframes textGlow {
+      from {
+        text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+      }
+      to {
+        text-shadow: 5px 5px 20px rgba(108, 92, 231, 0.9);
+      }
+    }
+
+    .message {
+      font-size: 24px;
+      color: #555;
+      margin-bottom: 40px;
+      font-style: italic;
+      max-width: 850px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+      animation: slideIn 1.5s ease;
+    }
+
+    @keyframes slideIn {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Ticket Container */
+    .ticket-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    /* Card */
+    .ticket {
+      width: 250px;
+      height: 300px;
+      perspective: 1000px; /* Adds perspective for the flip effect */
+    }
+
+    /* Card Inner Structure */
+    .ticket-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+      transform: rotateY(180deg); /* Start flipped */
+    }
+
+    /* Card Flip Effect */
+    .ticket.clicked .ticket-inner {
+      transform: rotateY(0deg); /* Flip to show front when clicked */
+    }
+
+    /* Front Side of the Card */
+    .ticket-front,
+    .ticket-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    /* Front Side (Image + Title) */
+    .ticket-front {
+      background-color: #9b59b6; /* Purple background */
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .ticket-front img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .ticket-front .ticket-name {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff; /* White text for better contrast */
+      padding: 10px;
+      text-align: center;
+    }
+
+    /* Back Side (Message) */
+    .ticket-back {
+      background-color: #9b59b6; /* Purple background */
+      color: #fff; /* White text for contrast */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      transform: rotateY(180deg); /* Show the back side by default */
+    }
+
+    /* Surprise Popup */
+    .surprise-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #ffffff;
+      color: #6c5ce7;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      z-index: 2000;
+      display: none;
+      animation: fadeInPopup 0.5s ease;
+    }
+
+    @keyframes fadeInPopup {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .surprise-popup h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .surprise-popup button {
+      background-color: #6c5ce7;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .surprise-popup button:hover {
+      background-color: #5a51d3;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particles Background -->
+  <div class="particles"></div>
+
+  <div class="container">
+    <h1>For My Babycakes!</h1>
+    <p class="message">Choose one of the options below. I can't wait to see your reaction! 💖</p>
+
+    <!-- Ticket Choices -->
+    <div class="ticket-container">
+      <div class="ticket" onclick="pickChoice('Shoes', './gym.jpg', 'Shoes', this)">
+        <div class="ticket-inner">
+          <div class="ticket-front">
+            <img src="./gym.jpg" alt="Shoes">
+            <div class="ticket-name">Shoes</div>
+          </div>
+          <div class="ticket-back">
+            Ano kaya ito!
+          </div>
+        </div>
+      </div>
+      <div class="ticket" onclick="pickChoice('Restaurant', 'jabe.jpg', 'Restaurant', this)">
+        <div class="ticket-inner">
+          <div class="ticket-front">
+            <img src="jabe.jpg" alt="Restaurant">
+            <div class="ticket-name">Restaurant</div>
+          </div>
+          <div class="ticket-back">
+            Ano kaya ito!
+          </div>
+        </div>
+      </div>
+      <div class="ticket" onclick="pickChoice('Shirt', 'shirt.jpg', 'Shirt', this)">
+        <div class="ticket-inner">
+          <div class="ticket-front">
+            <img src="shirt.jpg" alt="Shirt">
+            <div class="ticket-name">Shirt</div>
+          </div>
+          <div class="ticket-back">
+            Ano kaya ito!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Surprise Popup -->
+    <div id="surprisePopup" class="surprise-popup">
+      <h2>Surprise! 💝</h2>
+      <img id="selectedImage" src="" alt="Selected Option" style="width: 200px; height: 200px; object-fit: cover; margin-bottom: 20px;">
+      <p id="popupMessage"></p>
+      <button onclick="closeSurprisePopup()">Close</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Function to handle the choice and display a message
+    function pickChoice(choice, imageSrc, choiceName, card) {
+      // Add the 'clicked' class to trigger the flip
+      card.classList.add('clicked');
+
+      // Hide the ticket container and show the flip effect
+      const ticketContainer = document.querySelector('.ticket-container');
+      ticketContainer.style.display = 'none';
+
+      // Show the selected image and message
+      const selectedImage = document.getElementById('selectedImage');
+      const popupMessage = document.getElementById('popupMessage');
+
+      selectedImage.src = imageSrc;
+      popupMessage.textContent = `You picked: ${choiceName}. Get ready for something awesome! 💕`;
+
+      // Show the surprise popup
+      const popup = document.getElementById('surprisePopup');
+      popup.style.display = 'block';
+    }
+
+    // Function to close the surprise popup
+    function closeSurprisePopup() {
+      const popup = document.getElementById('surprisePopup');
+      popup.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For my Girlfriend Only</title>
+  <title>For My Girlfriend</title>
   <style>
+    /* All previous styles remain the same */
     * {
       margin: 0;
       padding: 0;
@@ -13,12 +14,22 @@
 
     body {
       font-family: 'Helvetica Neue', sans-serif;
-      background: linear-gradient(135deg, #f1c6ea, #f78fb3); /* Vibrant soft pink to lavender gradient */
+      background: radial-gradient(circle at top, #a29bfe, #6c5ce7, #b2bec3);
       color: #fff;
       text-align: center;
       overflow-x: hidden;
       line-height: 1.6;
       position: relative;
+    }
+
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
     }
 
     .container {
@@ -28,23 +39,26 @@
       background: rgba(255, 255, 255, 0.95);
       border-radius: 30px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      position: relative;
+      animation: fadeIn 2s ease;
     }
 
     h1 {
       font-size: 50px;
-      color: #8e44ad;
+      color: #6c5ce7;
       text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
       margin-bottom: 30px;
       font-family: 'Montserrat', sans-serif;
       letter-spacing: 3px;
-      animation: bounce 1s ease infinite;
+      animation: textGlow 2s infinite alternate;
     }
 
-    @keyframes bounce {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0); }
+    @keyframes textGlow {
+      from {
+        text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+      }
+      to {
+        text-shadow: 5px 5px 20px rgba(108, 92, 231, 0.9);
+      }
     }
 
     .message {
@@ -56,12 +70,18 @@
       margin-left: auto;
       margin-right: auto;
       line-height: 1.8;
-      animation: fadeIn 2s ease;
+      animation: slideIn 1.5s ease;
     }
 
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+    @keyframes slideIn {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     .images {
@@ -78,20 +98,25 @@
       overflow: hidden;
       border-radius: 15px;
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-      opacity: 0.85;
-      transition: transform 0.4s ease, opacity 0.4s ease;
       position: relative;
+      transform: scale(0.9);
+      transition: transform 0.5s ease;
     }
 
     .image-container:hover {
-      transform: scale(1.05);
-      opacity: 1;
+      transform: scale(1);
     }
 
     .image-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      filter: grayscale(0.5);
+      transition: filter 0.5s ease;
+    }
+
+    .image-container:hover img {
+      filter: grayscale(0);
     }
 
     .image-message {
@@ -106,22 +131,16 @@
       border-radius: 10px;
       width: 90%;
       text-align: center;
-      display: none;
-    }
-    
-    .duration {
-      font-weight: bold;
-      font-size: 28px;
-      color: #8e44ad;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
 
     .image-container:hover .image-message {
-      display: block;
+      opacity: 1;
     }
 
     .cta {
-      background-color: #ff69b4;
+      background-color: #6c5ce7;
       color: white;
       padding: 18px 40px;
       border-radius: 50px;
@@ -135,7 +154,7 @@
     }
 
     .cta:hover {
-      background-color: #ff3385;
+      background-color: #5a51d3;
       transform: translateY(-5px);
     }
 
@@ -143,74 +162,135 @@
       transform: translateY(3px);
     }
 
-    .heart-btn {
+    /* Floating Heart Animation */
+    @keyframes floatHearts {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .heart {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 90px;
-      height: 90px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease;
-    }
-
-    .heart-btn img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .heart-btn:hover img {
-      transform: scale(1.1);
-    }
-
-    .heart-btn:active img {
-      transform: scale(0.9);
-    }
-
-    /* Confetti Animation */
-    .confetti {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: floatHearts 2s infinite ease-in-out;
       z-index: 1000;
     }
 
-    .confetti div {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background-color: #ff69b4;
-      opacity: 0.9;
-      animation: fall 3s infinite ease-in-out;
+    .heart img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
     }
 
-    @keyframes fall {
-      0% { transform: translateY(-100px) rotate(0deg); }
-      100% { transform: translateY(100vh) rotate(720deg); }
+    /* Surprise Pop-up */
+    .surprise-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #ffffff;
+      color: #6c5ce7;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      z-index: 2000;
+      display: none;
+      animation: fadeInPopup 0.5s ease;
     }
-    
+
+    @keyframes fadeInPopup {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .surprise-popup h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .surprise-popup button {
+      background-color: #6c5ce7;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .surprise-popup button:hover {
+      background-color: #5a51d3;
+    }
+
+    /* Highlighting the years, months, and days */
+    .highlight-years {
+      font-weight: bold;
+      color: #5a51d3; /* Tomato red color */
+    }
+
+    .highlight-months {
+      font-weight: bold;
+      color: #5a51d3; /* Yellow color */
+    }
+
+    .highlight-days {
+      font-weight: bold;
+      color: #5a51d3; /* Lime green color */
+    }
+    /* Secret Button */
+    #secretButton {
+      display: none;
+      background-color: #e74c3c;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 20px;
+      margin-top: 40px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      letter-spacing: 2px;
+    }
+
+    #secretButton:hover {
+      background-color: #c0392b;
+      transform: translateY(-5px);
+    }
+
+    #secretButton:active {
+      transform: translateY(3px);
+    }
+
+    /* Input field for secret search */
+    #searchInput {
+      margin-top: 30px;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 10px;
+      width: 50%;
+    }
+
   </style>
 </head>
 <body>
 
-  <!-- Confetti Animation -->
-  <div class="confetti">
-    <div style="animation-delay: 0s; left: 10%;"></div>
-    <div style="animation-delay: 1s; left: 20%;"></div>
-    <div style="animation-delay: 2s; left: 30%;"></div>
-    <div style="animation-delay: 3s; left: 40%;"></div>
-    <div style="animation-delay: 4s; left: 50%;"></div>
-    <div style="animation-delay: 5s; left: 60%;"></div>
-    <div style="animation-delay: 6s; left: 70%;"></div>
-    <div style="animation-delay: 7s; left: 80%;"></div>
-    <div style="animation-delay: 8s; left: 90%;"></div>
-  </div>
+  <!-- Particles Background -->
+  <div class="particles"></div>
 
   <div class="container">
     <h1>For My Babycakes!</h1>
@@ -218,58 +298,47 @@
     <p class="message">
       Our relationship has lasted for <span id="duration" class="duration"></span>. I love you endlessly!
     </p>
-    
+
     <!-- Image Gallery with Messages -->
     <div class="images">
       <div class="image-container">
         <img src="./1.jfif" alt="Special Moment 1">
-        <p class="image-message">The first day we met, unforgettable!</p>
+        <p class="image-message">Pogi ko kasi dito e HAHHAHA</p>
       </div>
       <div class="image-container">
-        <img src="2.jpg" alt="Special Moment 2">
-        <p class="image-message">Our first vacation together, pure bliss!</p>
+        <img src="ss.jpg" alt="Special Moment 2">
+        <p class="image-message">First swimming baga natin ito</p>
       </div>
       <div class="image-container">
-        <img src="3.jfif" alt="Special Moment 3">
-        <p class="image-message">That night under the stars, so magical.</p>
-      </div>
-      <div class="image-container">
-        <img src="./1.jfif" alt="Special Moment 1">
-        <p class="image-message">The first day we met, unforgettable!</p>
-      </div>
-      <div class="image-container">
-        <img src="2.jpg" alt="Special Moment 2">
-        <p class="image-message">Our first vacation together, pure bliss!</p>
-      </div>
-      <div class="image-container">
-        <img src="3.jfif" alt="Special Moment 3">
-        <p class="image-message">That night under the stars, so magical.</p>
-      </div>
-      <div class="image-container">
-        <img src="./1.jfif" alt="Special Moment 1">
-        <p class="image-message">The first day we met, unforgettable!</p>
-      </div>
-      <div class="image-container">
-        <img src="2.jpg" alt="Special Moment 2">
-        <p class="image-message">Our first vacation together, pure bliss!</p>
-      </div>
-      <div class="image-container">
-        <img src="3.jfif" alt="Special Moment 3">
-        <p class="image-message">That night under the stars, so magical.</p>
+        <img src="./yes.jpg" alt="Special Moment 3">
+        <p class="image-message">Eto yung panahon na mahina kapa sakin e</p>
       </div>
     </div>
-    
+
     <!-- Personalized Message -->
     <p class="message">You make my life complete, and I'm so thankful for you every day. Here's to many more beautiful memories together!</p>
+
+    <!-- Search input to reveal the secret button -->
+    <input type="text" id="searchInput" placeholder="Search for the secret...">
     
+    <!-- Secret Button -->
+    <a href="surprise.html" id="secretButton">You found the secret! 🎉</a>
+
     <!-- Call to Action -->
     <a href="counting.html" class="cta">Anniversary Countdown</a>
-    <br><br>
-    <!-- Surprise Me Button -->
-    <button onclick="triggerConfetti()" class="cta">Surprise Me!</button>
   </div>
 
+  <!-- Floating Hearts -->
+  <div class="heart">
+    <img src="red-heart.png" alt="Heart">
+  </div>
 
+  <!-- Surprise Popup -->
+  <div id="surprisePopup" class="surprise-popup">
+    <h2>Surprise! 💝</h2>
+    <p>You are the most amazing person in my life, and I cherish every moment with you. 💜</p>
+    <button onclick="closeSurprisePopup()">Close</button>
+  </div>
 
   <script>
     // Function to calculate the duration of the relationship
@@ -286,23 +355,41 @@
 
     // Set the start date of your relationship
     const startDate = '2023-02-26';
-  
+
     // Calculate the duration
     const { years, months, days, totalDays } = calculateDuration(startDate);
-  
+
     // Display the duration in the placeholder
     const durationElement = document.getElementById('duration');
-    durationElement.textContent = `${years} years, ${months} months, and ${days} days (${totalDays} days total)`;
+    durationElement.innerHTML = `<span class="highlight-years">${years} years</span>, <span class="highlight-months">${months} months</span>, and <span class="highlight-days">${days} days</span> (${totalDays} days total)`;
 
-    // Trigger confetti on "Surprise Me" click
-    function triggerConfetti() {
-      const confettiElement = document.querySelector('.confetti');
-      confettiElement.classList.add('active');
-      setTimeout(() => {
-        confettiElement.classList.remove('active');
-      }, 5000);
+    // Show the surprise popup
+    setTimeout(() => {
+      const popup = document.getElementById('surprisePopup');
+      popup.style.display = 'block';
+    }, 5000); // Show after 5 seconds
+
+    // Close the popup
+    function closeSurprisePopup() {
+      const popup = document.getElementById('surprisePopup');
+      popup.style.display = 'none';
     }
-  </script>
 
+    // Secret Button functionality
+    const secretButton = document.getElementById('secretButton');
+    const searchInput = document.getElementById('searchInput');
+    
+    // Secret keyword to trigger the button appearance
+    const secretKeyword = "baby";
+
+    // Check if the input matches the secret keyword
+    searchInput.addEventListener("input", function() {
+      if (searchInput.value.toLowerCase() === secretKeyword) {
+        secretButton.style.display = 'inline-block';  // Show secret button
+      } else {
+        secretButton.style.display = 'none';  // Hide secret button if incorrect
+      }
+    });
+  </script>
 </body>
 </html>
