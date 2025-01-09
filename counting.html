@@ -6,38 +6,131 @@
   <title>Anniversary Countdown</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f4f4;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #8e44ad, #9b59b6);
+      background-size: 400% 400%;
+      animation: gradientAnimation 10s ease infinite;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
+      color: #fff;
     }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
     .container {
       text-align: center;
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.1);
       padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 90%;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
     }
+
     h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-      color: #ff4081;
-    }
-    .countdown {
       font-size: 40px;
-      color: #333;
+      margin-bottom: 40px;
+      color: #e1bee7;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 2s ease-in-out;
     }
+
+    .countdown {
+      display: flex;
+      justify-content: space-around;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
     .time {
+      position: relative;
+      display: inline-block;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: conic-gradient(#9b59b6 0% 100%);
+      color: #fff;
       font-size: 50px;
       font-weight: bold;
-      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease-in-out;
     }
-    .label {
-      font-size: 20px;
-      color: #888;
+
+    .time span {
+      z-index: 1;
+      position: relative;
+    }
+
+    .time .label {
+      font-size: 16px;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 600;
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .time:hover {
+      transform: scale(1.1);
+      background: conic-gradient(#8e44ad 0% 100%);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .happy-anniversary {
+      font-size: 40px;
+      color: white;
+      font-weight: 700;
+      animation: fadeIn 1.5s ease-in-out forwards;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 30px 20px;
+      }
+      .countdown {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .time {
+        width: 90px;
+        height: 90px;
+        font-size: 40px;
+      }
     }
   </style>
 </head>
@@ -45,42 +138,39 @@
   <div class="container">
     <h1>Our Anniversary Countdown</h1>
     <div class="countdown">
-      <div class="time" id="days"></div>
-      <div class="label">Days</div>
-      <div class="time" id="hours"></div>
-      <div class="label">Hours</div>
-      <div class="time" id="minutes"></div>
-      <div class="label">Minutes</div>
-      <div class="time" id="seconds"></div>
-      <div class="label">Seconds</div>
+      <div class="time" id="days"><span id="days-number">00</span><div class="label">Days</div></div>
+      <div class="time" id="hours"><span id="hours-number">00</span><div class="label">Hours</div></div>
+      <div class="time" id="minutes"><span id="minutes-number">00</span><div class="label">Minutes</div></div>
+      <div class="time" id="seconds"><span id="seconds-number">00</span><div class="label">Seconds</div></div>
     </div>
   </div>
 
   <script>
-    // Set the date of the anniversary (use the format: 'YYYY-MM-DD HH:MM:SS')
     const anniversaryDate = new Date("2025-02-26T00:00:00").getTime();
 
-    // Update the countdown every 1 second
     const interval = setInterval(function() {
       const now = new Date().getTime();
       const timeRemaining = anniversaryDate - now;
 
-      // Calculate days, hours, minutes, and seconds
       const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-      // Display the result
-      document.getElementById("days").innerText = days;
-      document.getElementById("hours").innerText = hours;
-      document.getElementById("minutes").innerText = minutes;
-      document.getElementById("seconds").innerText = seconds;
+      document.getElementById("days-number").innerText = String(days).padStart(2, '0');
+      document.getElementById("hours-number").innerText = String(hours).padStart(2, '0');
+      document.getElementById("minutes-number").innerText = String(minutes).padStart(2, '0');
+      document.getElementById("seconds-number").innerText = String(seconds).padStart(2, '0');
 
-      // If the countdown is over, display a message
+      // Adjust colors of the countdown elements
+      document.getElementById("days").style.background = `conic-gradient(#8e44ad ${Math.min(100, (days / 365) * 100)}%, #9b59b6 0%)`;
+      document.getElementById("hours").style.background = `conic-gradient(#8e44ad ${Math.min(100, (hours / 24) * 100)}%, #9b59b6 0%)`;
+      document.getElementById("minutes").style.background = `conic-gradient(#8e44ad ${Math.min(100, (minutes / 60) * 100)}%, #9b59b6 0%)`;
+      document.getElementById("seconds").style.background = `conic-gradient(#8e44ad ${Math.min(100, (seconds / 60) * 100)}%, #9b59b6 0%)`;
+
       if (timeRemaining <= 0) {
         clearInterval(interval);
-        document.querySelector(".container").innerHTML = "<h1>Happy Anniversary!</h1>";
+        document.querySelector(".container").innerHTML = "<h1 class='happy-anniversary'>Happy Anniversary!</h1>";
       }
     }, 1000);
   </script>
